@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="StoreDB" Class="LinqToStoreDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\DB\StoreDB.mdf;Integrated Security=True" SettingsObjectName="Store.Model.Properties.Settings" SettingsPropertyName="StoreDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ConcreteProduct" Member="ConcreteProducts">
+    <Type Name="ConcreteProduct">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ConcreteProduct_Link_ConcreteProduct_Order" Member="Link_ConcreteProduct_Orders" ThisKey="Id" OtherKey="ProductId" Type="Link_ConcreteProduct_Order" />
+      <Association Name="Product_ConcreteProduct" Member="Product" ThisKey="ProductId" OtherKey="Id" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DiliveryType" Member="DiliveryTypes">
+    <Type Name="DiliveryType">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="DiliveryType_Order" Member="Orders" ThisKey="Id" OtherKey="DiliveryTypeId" Type="Order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Link_ConcreteProduct_Order" Member="Link_ConcreteProduct_Orders">
+    <Type Name="Link_ConcreteProduct_Order">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ConcreteProduct_Link_ConcreteProduct_Order" Member="ConcreteProduct" ThisKey="ProductId" OtherKey="Id" Type="ConcreteProduct" IsForeignKey="true" />
+      <Association Name="Order_Link_ConcreteProduct_Order" Member="Order" ThisKey="OrderId" OtherKey="Id" Type="Order" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Order]" Member="Orders">
+    <Type Name="Order">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PaymentTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DiliveryTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Order_Link_ConcreteProduct_Order" Member="Link_ConcreteProduct_Orders" ThisKey="Id" OtherKey="OrderId" Type="Link_ConcreteProduct_Order" />
+      <Association Name="DiliveryType_Order" Member="DiliveryType" ThisKey="DiliveryTypeId" OtherKey="Id" Type="DiliveryType" IsForeignKey="true" />
+      <Association Name="PaymentType_Order" Member="PaymentType" ThisKey="PaymentTypeId" OtherKey="Id" Type="PaymentType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PaymentType" Member="PaymentTypes">
+    <Type Name="PaymentType">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="PaymentType_Order" Member="Orders" ThisKey="Id" OtherKey="PaymentTypeId" Type="Order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Product" Member="Products">
+    <Type Name="Product">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Association Name="Product_ConcreteProduct" Member="ConcreteProducts" ThisKey="Id" OtherKey="ProductId" Type="ConcreteProduct" />
+      <Association Name="Product_ProductDetail" Member="ProductDetails" ThisKey="Id" OtherKey="ProductId" Type="ProductDetail" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductCategory" Member="ProductCategories">
+    <Type Name="ProductCategory">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="ProductCategory_ProductDetail" Member="ProductDetails" ThisKey="Id" OtherKey="ProductCategoryId" Type="ProductDetail" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductDetails" Member="ProductDetails">
+    <Type Name="ProductDetail">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ProductCategoryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="Product_ProductDetail" Member="Product" ThisKey="ProductId" OtherKey="Id" Type="Product" IsForeignKey="true" />
+      <Association Name="ProductCategory_ProductDetail" Member="ProductCategory" ThisKey="ProductCategoryId" OtherKey="Id" Type="ProductCategory" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
