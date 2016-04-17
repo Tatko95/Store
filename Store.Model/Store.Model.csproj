@@ -68,7 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\Repository\IStoreRepository.cs" />
+    <Compile Include="Abstract\Service\IFirstService.cs" />
     <Compile Include="Concrete\Repository\StoreRepository.cs" />
+    <Compile Include="Concrete\Service\FirstService.cs" />
     <Compile Include="Entities\dbml\LinqToStore.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -117,13 +119,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DB\StoreDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>StoreDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="StoreDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="StoreDB_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>StoreDB.mdf</DependentUpon>
     </Content>
