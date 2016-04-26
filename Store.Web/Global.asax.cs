@@ -30,7 +30,8 @@ namespace Store.Web
             container.RegisterType<IStoreRepository, StoreRepository>
                 (new HttpContextLifetimeManager<IStoreRepository>(), new InjectionConstructor(WebConfigurationManager.ConnectionStrings["Store"].ConnectionString));
 
-            container.RegisterType<IFirstService, FirstService>(new HttpContextLifetimeManager<IFirstService>());
+            container.RegisterType<IProductCategoryService, ProductCategoryService>(new HttpContextLifetimeManager<IProductCategoryService>());
+            container.RegisterType<IProductService, ProductService>(new HttpContextLifetimeManager<IProductService>());
 
             ControllerBuilder.Current.SetControllerFactory(new UnityControllerFactory(container));
         }

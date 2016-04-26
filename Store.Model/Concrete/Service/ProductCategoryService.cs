@@ -6,11 +6,8 @@ using Store.Model.Abstract;
 
 namespace Store.Model.Concrete.Service
 {
-    public class FirstService : BaseService<DiliveryType>, IFirstService
+    public class ProductCategoryService : BaseService<ProductCategory>, IProductCategoryService
     {
-        public FirstService(IStoreRepository repository) : base(repository)
-        {
-
-        }
+        public ProductCategoryService(IStoreRepository repository) : base(repository) { }
     }
 }

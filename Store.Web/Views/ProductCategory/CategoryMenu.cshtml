@@ -1,0 +1,18 @@
+﻿@using Store.Model.Entities.dbml;
+@model IQueryable<ProductCategory>
+
+@foreach (ProductCategory link in Model)
+{
+    @Html.RouteLink(link.Name,
+        new
+        {
+            controller = "Product",
+            action = "List",
+            categoryId = link.Id,
+            page = 1
+        },
+        new
+        {
+            @class = link.Id == ViewBag.SelectedCategoryId ? "selected" : null
+        })
+}
