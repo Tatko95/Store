@@ -1,0 +1,16 @@
+﻿@model IQueryable<Product>
+@using Store.Model.Entities.dbml;
+@using Store.Web.HtmlHelpers
+
+@{
+    ViewBag.Title = "Products";
+}
+
+@foreach (var item in Model)
+{
+    Html.RenderPartial("ProductSummary", item);
+}
+
+<div class="pager">
+    @Html.PageLinks(((PagingInfo)ViewData["PageInfo"]), x => Url.Action("List", new { page = x, categoryId = Model.FirstOrDefault().ProductCategoryId }))
+</div>

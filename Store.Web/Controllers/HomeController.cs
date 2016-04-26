@@ -5,8 +5,8 @@ namespace Store.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private IFirstService service;
-        public HomeController(IFirstService service)
+        private IProductCategoryService service;
+        public HomeController(IProductCategoryService service)
         {
             this.service = service;
         }

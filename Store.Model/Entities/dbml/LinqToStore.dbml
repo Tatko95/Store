@@ -42,31 +42,31 @@
       <Association Name="PaymentType_Order" Member="Orders" ThisKey="Id" OtherKey="PaymentTypeId" Type="Order" />
     </Type>
   </Table>
+  <Table Name="dbo.ProductCategory" Member="ProductCategories">
+    <Type Name="ProductCategory">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="ProductCategory_Product" Member="Products" ThisKey="Id" OtherKey="ProductCategoryId" Type="Product" />
+    </Type>
+  </Table>
   <Table Name="dbo.Product" Member="Products">
     <Type Name="Product">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="ProductCategoryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Product_ConcreteProduct" Member="ConcreteProducts" ThisKey="Id" OtherKey="ProductId" Type="ConcreteProduct" />
       <Association Name="Product_ProductDetail" Member="ProductDetails" ThisKey="Id" OtherKey="ProductId" Type="ProductDetail" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ProductCategory" Member="ProductCategories">
-    <Type Name="ProductCategory">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Association Name="ProductCategory_ProductDetail" Member="ProductDetails" ThisKey="Id" OtherKey="ProductCategoryId" Type="ProductDetail" />
+      <Association Name="ProductCategory_Product" Member="ProductCategory" ThisKey="ProductCategoryId" OtherKey="Id" Type="ProductCategory" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ProductDetails" Member="ProductDetails">
     <Type Name="ProductDetail">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ProductCategoryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="Value" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="Product_ProductDetail" Member="Product" ThisKey="ProductId" OtherKey="Id" Type="Product" IsForeignKey="true" />
-      <Association Name="ProductCategory_ProductDetail" Member="ProductCategory" ThisKey="ProductCategoryId" OtherKey="Id" Type="ProductCategory" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
