@@ -14,17 +14,22 @@ namespace Data.Repository.Concrete
             this.repository = repository;
         }
 
-        public T GetById(string idName, string idValue)
+        public T GetById(int id)
+        {
+            return repository.Table<T>().Where("id" + " == @0", id).FirstOrDefault();
+        }
+
+        public T GetByColumn(string columnName, string value)
         {
             // если значение можно привести к int, то приводим, иначе - передаём string
             int idInt;
             object idObject;
-            if (int.TryParse(idValue, out idInt))
+            if (int.TryParse(value, out idInt))
                 idObject = idInt;
             else
-                idObject = idValue;
+                idObject = value;
 
-            T result = repository.Table<T>().Where(idName + " == @0", idObject).FirstOrDefault();
+            T result = repository.Table<T>().Where(columnName + " == @0", idObject).FirstOrDefault();
             return result;
         }
 

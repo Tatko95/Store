@@ -1,5 +1,6 @@
 ﻿using Store.Model.Abstract.Service;
 using Store.Model.Entities.dbml;
+using Store.Model.Entities.Helpers;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -28,6 +29,15 @@ namespace Store.Web.Controllers
 
             ViewData["PageInfo"] = pgInfo;
             return View(model);
+        }
+
+        public JsonResult InsertInCart(int? productId)
+        {
+            Cart cart = (Cart)Session["Cart"] ?? new Cart();
+            if (productId.HasValue)
+                cart.AddItem(service.GetById(productId.Value), 1);
+            Session["Cart"] = cart;
+            return Json(string.Empty, JsonRequestBehavior.AllowGet);
         }
     }
 }

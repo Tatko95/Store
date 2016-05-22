@@ -1,0 +1,29 @@
+﻿@model Store.Model.Entities.dbml.PaymentType
+
+@{
+    ViewBag.Title = "Довідник виду оплати";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#list").jqGrid({
+            url: '/PaymentType/GetList',
+            datatype: "json",
+            colNames: ['id', 'name'],
+            colModel: [
+                { name: 'Id', index: 'Id', width: 55 },
+                { name: 'Name', index: 'Name', width: 90 },
+            ],
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            pager: '#pager',
+            sortname: 'name',
+            viewrecords: true,
+            sortorder: "desc",
+        });
+    });
+</script>
+<h1>Довідник виду оплати</h1>
+<table id="list"></table>
+<div id="pager"></div>
+

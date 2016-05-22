@@ -19,6 +19,11 @@ namespace Store.Web
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/Site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jGrid").Include(
+                "~/Scripts/jquery-ui-1.10.0.js",
+                "~/Scripts/jquery.jqGrid.js",
+                "~/Scripts/i18n/grid.locale-ua.js"));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿USE [E:\STUDY\KPI\STORE\STORE.MODEL\DB\STOREDB.MDF];
+﻿USE StoreDB
 
 ALTER TABLE [Product]
 ADD ProductCategoryId int foreign key references [ProductCategory](Id)

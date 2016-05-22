@@ -46,6 +46,16 @@ namespace Store.Model.Entities.Helpers
         {
             get { return lineCollection; }
         }
+
+        public IEnumerable<Product> GetAllProducts()
+        {
+            List<Product> result = new List<Product>();
+            foreach (var item in lineCollection)
+            {
+                result.Add(item.Product);
+            }
+            return result;
+        }
     }
 
     public class CartLine
