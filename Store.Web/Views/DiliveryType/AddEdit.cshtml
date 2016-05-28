@@ -1,0 +1,27 @@
+﻿@model Store.Model.Entities.dbml.DiliveryType
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+    function Save() {
+        $.ajax({
+            url: '/DiliveryType/AddEdit/',
+            type: "POST",
+            data: { id: $('#Id').val(), name: $('#Name').val() },
+            success: function (text) {
+                if (text == "Good") {
+                    $('#add_edit_dialog').dialog('destroy').html("");
+                    $('#list').trigger('reloadGrid');
+                }
+            }
+        });
+    }
+</script>
+
+@Html.HiddenFor(x => x.Id)
+<div>Значення:</div>
+<div style="height:10px"></div>
+<div>@Html.TextBoxFor(x => x.Name)</div>
+<div style="height:10px"></div>
+<input type="button" value="Зберегти" onclick="Save()" />
+
