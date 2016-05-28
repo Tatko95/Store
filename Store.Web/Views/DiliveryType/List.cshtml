@@ -1,0 +1,86 @@
+﻿@model Store.Model.Entities.dbml.DiliveryType
+
+@{
+    ViewBag.Title = "Довідник виду доставки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" media="screen" href="~/Content/themes/base/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="~/Content/jquery.jqGrid/ui.jqgrid.css" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#list").jqGrid({
+            url: '/DiliveryType/GetList',
+            datatype: "json",
+            colNames: ['id', 'Значення', ''],
+            colModel: [
+                { name: 'Id', index: 'Id', hidden: true },
+                { name: 'Name', index: 'Name', width: 600 },
+                { name: 'delete', index: 'delete', width: 74, formatter: displayButtons }
+            ],
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            pager: '#pager',
+            sortname: 'name',
+            viewrecords: true,
+            sortorder: "desc",
+            onSelectRow: function () {
+            },
+            ondblClickRow: function (rowid) {
+                var rows = $("#list").jqGrid('getCol', 'Id');
+
+                AddEdit(rows[rowid - 1]);
+            }
+        });
+    });
+
+    function AddEdit(objKey) {
+        $.ajax({
+            url: '/DiliveryType/AddEdit/',
+            type: 'GET',
+            data: { id: objKey },
+            success: function (result) {
+                $("#add_edit_dialog").html(result).dialog({
+                    width: 'auto',
+                    height: 'auto',
+                    resizable: false,
+                    modal: true,
+                    show: { effect: "drop", direction: "left" },
+                    hide: { effect: "drop", direction: "left" },
+                    title: objKey == null ? 'Створення запису' : 'Редагування запису',
+                    closeOnEscape: true,
+                    zIndex: 900,
+                    close: function () {
+                        $(this).dialog('destroy').html("");
+                    }
+                });
+            }
+        });
+    }
+
+    function displayButtons(cellvalue, options, rowObject) {
+        var edit = "<input type='button' value='Видалити' onClick='DeleteRecord(" + rowObject[0] + ")' />"
+        return edit;
+    }
+
+    function DeleteRecord(id) {
+        $.ajax({
+            url: '/DiliveryType/Delete/',
+            type: "POST",
+            data: { id: id },
+            success: function (text) {
+                if (text == "Good") {
+                    $('#list').trigger('reloadGrid');
+                }
+            }
+        });
+    }
+</script>
+<h1>Довідник виду доставки</h1>
+<input type="button" value="Додати нове значення" onclick="AddEdit()" />
+<div style="height:10px"></div>
+<table id="list"></table>
+<div id="pager"></div>
+
+<div id="add_edit_dialog"></div>
