@@ -34,6 +34,7 @@ namespace Store.Web
             container.RegisterType<IProductService, ProductService>(new HttpContextLifetimeManager<IProductService>());
             container.RegisterType<IOrderService, OrderService>(new HttpContextLifetimeManager<IOrderService>());
             container.RegisterType<IPaymentTypeService, PaymentTypeService>(new HttpContextLifetimeManager<IPaymentTypeService>());
+            container.RegisterType<IDiliveryTypeService, DiliveryTypeService>(new HttpContextLifetimeManager<IDiliveryTypeService>());
 
             ControllerBuilder.Current.SetControllerFactory(new UnityControllerFactory(container));
         }

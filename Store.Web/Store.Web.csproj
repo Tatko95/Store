@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DiliveryTypeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaymentTypeController.cs" />
@@ -292,6 +293,8 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\PaymentType\List.cshtml" />
     <Content Include="Views\PaymentType\AddEdit.cshtml" />
+    <Content Include="Views\DiliveryType\List.cshtml" />
+    <Content Include="Views\DiliveryType\AddEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

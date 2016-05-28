@@ -1,7 +1,7 @@
-﻿@model Store.Model.Entities.dbml.PaymentType
+﻿@model Store.Model.Entities.dbml.DiliveryType
 
 @{
-    ViewBag.Title = "Довідник виду оплати";
+    ViewBag.Title = "Довідник виду доставки";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,7 +11,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#list").jqGrid({
-            url: '/PaymentType/GetList',
+            url: '/DiliveryType/GetList',
             datatype: "json",
             colNames: ['id', 'Значення', ''],
             colModel: [
@@ -29,7 +29,7 @@
             },
             ondblClickRow: function (rowid) {
                 var rows = $("#list").jqGrid('getCol', 'Id');
-                
+
                 AddEdit(rows[rowid - 1]);
             }
         });
@@ -37,7 +37,7 @@
 
     function AddEdit(objKey) {
         $.ajax({
-            url: '/PaymentType/AddEdit/',
+            url: '/DiliveryType/AddEdit/',
             type: 'GET',
             data: { id: objKey },
             success: function (result) {
@@ -66,7 +66,7 @@
 
     function DeleteRecord(id) {
         $.ajax({
-            url: '/PaymentType/Delete/',
+            url: '/DiliveryType/Delete/',
             type: "POST",
             data: { id: id },
             success: function (text) {
@@ -77,7 +77,7 @@
         });
     }
 </script>
-<h1>Довідник виду оплати</h1>
+<h1>Довідник виду доставки</h1>
 <input type="button" value="Додати нове значення" onclick="AddEdit()" />
 <div style="height:10px"></div>
 <table id="list"></table>

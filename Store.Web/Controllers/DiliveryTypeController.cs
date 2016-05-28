@@ -1,18 +1,18 @@
 ﻿using Store.Model.Abstract.Service;
-using Store.Model.Concrete.Service;
 using Store.Model.Entities.dbml;
 using Store.Web.Utils;
 using System;
-using System.Linq;
 using System.Linq.Dynamic;
+using System.Linq;
 using System.Web.Mvc;
+using Store.Model.Concrete.Service;
 
 namespace Store.Web.Controllers
 {
-    public class PaymentTypeController : BaseController<PaymentType>
+    public class DiliveryTypeController : BaseController<DiliveryType>
     {
         #region ctor
-        public PaymentTypeController(IPaymentTypeService service) : base(service) { }
+        public DiliveryTypeController(IDiliveryTypeService service) : base(service) { }
         #endregion
 
         public ActionResult List()
@@ -22,12 +22,12 @@ namespace Store.Web.Controllers
 
         public JsonResult GetList(JQGridPostData jsonHeader)
         {
-            IQueryable<PaymentType> data = service.GetAll();
+            IQueryable<DiliveryType> data = service.GetAll();
 
             int totalRecords = data.Count();
             int totalPages = (int)Math.Ceiling(totalRecords / (double)jsonHeader.Rows);
             jsonHeader.SetCorrectPage(totalRecords);
-            IQueryable<PaymentType> query = data
+            IQueryable<DiliveryType> query = data
                 .OrderBy(jsonHeader.Sidx + " " + jsonHeader.Sord)
                 .Skip((jsonHeader.Page - 1) * jsonHeader.Rows).Take(jsonHeader.Rows);
 
@@ -58,9 +58,9 @@ namespace Store.Web.Controllers
         [HttpGet]
         public ViewResult AddEdit(int? id)
         {
-            PaymentType model;
+            DiliveryType model;
             if (!id.HasValue)
-                model = new PaymentType();
+                model = new DiliveryType();
             else
                 model = service.GetById(id.Value);
 
@@ -70,7 +70,7 @@ namespace Store.Web.Controllers
         [HttpPost]
         public ActionResult AddEdit(int? id, string name)
         {
-            ((PaymentTypeService)service).UpsertRecord(id, name);
+            ((DiliveryTypeService)service).UpsertRecord(id, name);
             return Content("Good");
         }
         #endregion
@@ -79,9 +79,10 @@ namespace Store.Web.Controllers
         public ActionResult Delete(int? id)
         {
             if (id.HasValue)
-                ((PaymentTypeService)service).DeleteRecord(id.Value);
+                ((DiliveryTypeService)service).DeleteRecord(id.Value);
             return Content("Good");
         }
         #endregion
+
     }
 }
