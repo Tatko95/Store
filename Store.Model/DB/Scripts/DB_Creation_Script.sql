@@ -2,7 +2,7 @@ CREATE DATABASE StoreDB
 ON
 (
 	NAME = 'StoreDB',
-	FILENAME = 'E:\StoreDB.mdf',
+	FILENAME = 'E:\GitHub\StoreDB\StoreDB.mdf',
 	SIZE = 10MB,
 	MAXSIZE = 100MB,
 	FILEGROWTH = 10MB
@@ -10,7 +10,7 @@ ON
 LOG ON
 (
 	NAME = 'LogStoreDB',
-	FILENAME = 'E:\StoreDB.ldf',
+	FILENAME = 'E:\GitHub\StoreDB\StoreDB.ldf',
 	SIZE = 5MB,
 	MAXSIZE = 50MB,
 	FILEGROWTH = 5MB
@@ -47,29 +47,36 @@ create table Product
 create table ProductDetails
 (
 	Id int identity primary key,
-	ProductId int foreign key references Product(Id) not null,
-	ProductCategoryId int foreign key references ProductCategory(Id) not null,
+	ProductId int not null,
+	ProductCategoryId int not null,
 	Name nvarchar(100) not null,
-	Value nvarchar(100) not null
+	Value nvarchar(100) not null,
+	constraint FK_prodDet_ProductId_prod_Id foreign key (ProductId) references Product(Id),
+	constraint FK_prodDet_ProductCategoryId_prodCat_Id foreign key (ProductCategoryId) references ProductCategory(Id)
 )
 
 create table ConcreteProduct 
 (
 	Id int identity primary key,
 	FullName nvarchar(100) null,
-	ProductId int foreign key references Product(Id) not null
+	ProductId int not null,
+	constraint FK_concrProd_ProductId_prod_Id foreign key (ProductId) references Product(Id)
 )
 
 create table [Order]
 (
 	Id int identity primary key,
-	PaymentTypeId int foreign key references PaymentType(Id) not null,
-	DiliveryTypeId int foreign key references DiliveryType(Id) not null,
+	PaymentTypeId int not null,
+	DiliveryTypeId int not null,
+	constraint FK_ord_PayTypeId_payType_Id foreign key (PaymentTypeId) references PaymentType(Id),
+	constraint FK_ord_DilTypeId_dilType_Id foreign key (DiliveryTypeId) references DiliveryType(Id)
 )
 
 create table Link_ConcreteProduct_Order
 (
 	Id int identity primary key,
-	ProductId int foreign key references ConcreteProduct(Id) not null,
-	OrderId int foreign key references [Order](Id) not null
+	ProductId int not null,
+	OrderId int not null,
+	constraint FK_link_ProdId_concrProd_Id foreign key (ProductId) references ConcreteProduct(Id),
+	constraint FK_link_OrderId_order_Id foreign key (OrderId) references [Order](Id)
 )
