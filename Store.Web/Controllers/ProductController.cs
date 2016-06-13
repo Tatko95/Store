@@ -24,20 +24,32 @@ namespace Store.Web.Controllers
                 ItemsPerPage = PageSize,
                 TotalItems = list.Count()
             };
-            
+
             var model = list.Skip((page - 1) * PageSize).Take(PageSize);
 
             ViewData["PageInfo"] = pgInfo;
             return View(model);
         }
 
-        public JsonResult InsertInCart(int? productId)
+        public ViewResult InsertInCart(int? productId)
         {
             Cart cart = (Cart)Session["Cart"] ?? new Cart();
             if (productId.HasValue)
                 cart.AddItem(service.GetById(productId.Value), 1);
             Session["Cart"] = cart;
-            return Json(string.Empty, JsonRequestBehavior.AllowGet);
+            return View("CartSummary", cart);
+        }
+
+        public ActionResult ClearCart()
+        {
+            Session["Cart"] = new Cart();
+            return Content("Good");
+        }
+
+        public ViewResult CartSummary()
+        {
+            Cart cart = (Cart)Session["Cart"] ?? new Cart();
+            return View(cart);
         }
     }
 }

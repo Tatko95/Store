@@ -1,32 +1,33 @@
 ﻿@model Store.Model.Entities.dbml.Order
 @using Store.Model.Entities.Helpers;
 
-@{
-    ViewBag.Title = "Оформлення замовлення";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    //IEnumerable<CartLine> products = ((Cart)Session["Cart"]).Lines;
-}
+    @{
+        ViewBag.Title = "Оформлення замовлення";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        //IEnumerable<CartLine> products = ((Cart)Session["Cart"]).Lines;
+    }
 
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(x => x.Id)
-    <h2>Ваше замовлення</h2>
-    <div></div>
-    <ol>
-        @foreach (CartLine item in ((Cart)Session["Cart"]).Lines)
-        {
-            <li>@(item.Product.Name + " (" + item.Quantity  + " шт.) (" + (item.Product.Price * item.Quantity) + " грн)")</li>
-        }
-    </ol>
-    <div></div>
-    <div>Ваше ім'я:</div>
-    <div>@Html.TextBoxFor(x => x.Name)</div>
-    <div>Адреса:</div>
-    <div>@Html.TextBoxFor(x => x.Adress)</div>
-    <div style="height:20px"></div>
-    <div>Тип оплати:</div>
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(x => x.Id)
+        <h2>Ваше замовлення</h2>
+        <div></div>
+        <ol>
+            @foreach (CartLine item in ((Cart)ViewData["Cart"]).Lines)
+            {
+                <li>@(item.Product.Name + " (" + item.Quantity + " шт.) (" + (item.Product.Price * item.Quantity) + " грн)")</li>
+            }
+        </ol>
+        <div></div>
+        <div>Ваше ім'я:</div>
+        <div>@Html.TextBoxFor(x => x.Name)</div>
+        <div>Адреса:</div>
+        <div>@Html.TextBoxFor(x => x.Adress)</div>
+        <div>Тип оплати:</div>
+        <div>@Html.DropDownList("PaymentTypeId", (IEnumerable<SelectListItem>)ViewData["PaymentType"])</div>
 
-    <div>Тип доставки:</div>
-    <button type="submit" class="submitButt">Підтвердити</button>
+        <div>Тип доставки:</div>
+        <div>@Html.DropDownList("DiliveryTypeId", (IEnumerable<SelectListItem>)ViewData["DiliveryType"])</div>
+        <button type="submit" class="submitButt">Підтвердити</button>
 
-}
+    }
