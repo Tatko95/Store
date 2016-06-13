@@ -3,13 +3,12 @@
 
 <script type="text/javascript">
     function AddInCart(id) {
-        alert(id);
         $.ajax({
             url: "/Product/InsertInCart",
             type: "post",
             data: { productId: id },
             success: function (result) {
-
+                $('#divCart').html(result); 
             }
         });
     }
@@ -27,7 +26,6 @@
     @using (Html.BeginForm("AddToCart", "Cart"))
     {
         @Html.HiddenFor(x => x.Id)
-        @*@Html.Hidden("returnUrl", Request.Url.PathAndQuery)*@
         <input type="button" onclick="AddInCart($(this).attr('idProduct'))" idProduct="@Model.Id" value="+ В КОШИК" />
     }
     <h4>@Model.Price грн.</h4>

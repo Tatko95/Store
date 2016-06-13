@@ -9,7 +9,9 @@
 <body>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <div id="header">
-        @*@{Html.RenderAction("Summary", "Cart");}*@
+        <div id="divCart">
+            @{Html.RenderAction("CartSummary", "Product");}
+        </div>
         <div class="title">МАГАЗИН</div>
     </div>
     <div id="categories">
